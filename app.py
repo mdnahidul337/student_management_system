@@ -56,6 +56,7 @@ def register():
             roll = data.get('roll')
             collage = data.get('collage')
             semester = data.get('semester')
+            department = data.get('department')
 
             users = load_users()
             students = load_students()
@@ -77,8 +78,10 @@ def register():
                 'username': username,
                 'name': name,
                 'roll': roll,
+                'department': department,
                 'collage': collage,
                 'semester': semester
+                
             }
             students.append(new_student)
             save_students(students)
@@ -145,8 +148,10 @@ def update_profile():
             # Update student data
             student['name'] = data.get('name', student['name'])
             student['roll'] = data.get('roll', student['roll'])
+            student['department'] = data.get('department', student['department'])
             student['collage'] = data.get('collage', student['collage'])
             student['semester'] = data.get('semester', student['semester'])
+            
 
             save_students(students)
             return jsonify({'success': True, 'message': 'Profile updated successfully'})
