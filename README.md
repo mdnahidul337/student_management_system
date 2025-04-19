@@ -1,4 +1,6 @@
-# student_management_system
+# Student Management System
+
+this code free for all Members 
 
 # Line Number 211-212
 if __name__ == '__main__':
