@@ -50,6 +50,7 @@ def register():
     if request.method == 'POST':
         try:
             data = request.get_json()
+            gmail = data.get('gmail')
             username = data.get('username')
             password = data.get('password')
             name = data.get('name')
@@ -60,13 +61,15 @@ def register():
 
             users = load_users()
             students = load_students()
-
+            
             if any(user['username'] == username for user in users):
                 return jsonify({'error': 'Username already exists'}), 400
+            
 
             user_id = generate_id()
             new_user = {
                 'id': user_id,
+                'gmail': gmail,
                 'username': username,
                 'password': generate_password_hash(password)
             }
@@ -75,6 +78,7 @@ def register():
 
             new_student = {
                 'id': user_id,
+                'gmail': gmail,
                 'username': username,
                 'name': name,
                 'roll': roll,
@@ -102,6 +106,7 @@ def login():
 
             users = load_users()
             user = next((u for u in users if u['username'] == username), None)
+
 
             if not user or not check_password_hash(user['password'], password):
                 return jsonify({'error': 'Invalid username or password'}), 401
@@ -147,6 +152,7 @@ def update_profile():
 
             # Update student data
             student['name'] = data.get('name', student['name'])
+            student['gmail'] = data.get('gmail', student['gmail'])
             student['roll'] = data.get('roll', student['roll'])
             student['department'] = data.get('department', student['department'])
             student['collage'] = data.get('collage', student['collage'])
